@@ -1,6 +1,6 @@
 class TestPageObject {
-  openURL(url) {
-    browser.url(url);
+  openDEVURL() {
+    browser.url(process.env.appEnv);
   }
 }
 export default new TestPageObject();
