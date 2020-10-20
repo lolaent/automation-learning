@@ -39,3 +39,21 @@ Then(
     TestPageObject.getDealsSuccessMessage(expectedText);
   }
 );
+
+When(/^I click on the Travelers dropdown$/, function() {
+  TestPageObject.clickTravelersDropdown();
+});
+
+Then(/^I validate that "([^"]*)" is displayed by default for Adults$/, function(
+  expectedValue
+) {
+  TestPageObject.byDefaultNumberForAdults(expectedValue);
+});
+
+Then(/^I validate that the Search button is displayed$/, function() {
+  TestPageObject.validateSearchButtonIsDisplayed();
+});
+
+Then(/^I validate that the Search button is disabled$/, function() {
+  TestPageObject.validateSearchButtonIsDisabled();
+});
