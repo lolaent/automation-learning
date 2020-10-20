@@ -23,5 +23,8 @@
     "@wdio/selenium-standalone-service": "6.6.3",
     "@wdio/spec-reporter": "6.6.3",
     "@wdio/sync": "6.6.0"
+  },
+  "dependencies": {
+    "chai": "4.2.0"
   }
 }
