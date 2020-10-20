@@ -8,6 +8,11 @@ const emailSignUpTitle = "[data-hook='email-sign-up-title']";
 const emailAddressInputField = "[data-hook='email-sign-up-email-input']";
 const getDealButton = "[data-hook='email-sign-up-get-deals-button']";
 const getDealsSuccessMessage = "[data-hook='email-sign-up-success-message']";
+const travelersDropdown =
+  "[data-hook='flight-search-travelers-expando-button']";
+const searchFlightAdults = "[data-hook='flight-search-adults']";
+const searchHomepageButton = "[data-hook='flight-search-submit']";
+
 class TestPageObject {
   openDEVURL() {
     browser.maximizeWindow();
@@ -26,7 +31,6 @@ class TestPageObject {
 
   clickGetDealsEmailSignUpButton() {
     $(getDealsEmailSignUp).waitForDisplayed();
-    browser.pause(3000);
     $(getDealsEmailSignUp).click();
   }
 
@@ -50,11 +54,36 @@ class TestPageObject {
 
   getDealsSuccessMessage(expectedText) {
     $(getDealsSuccessMessage).waitForDisplayed();
-    $(getDealsSuccessMessage).getText();
 
     let text = $(getDealsSuccessMessage).getText();
 
     assert.equal(text, expectedText, 'Successfull message is not correct');
+  }
+
+  clickTravelersDropdown() {
+    $(travelersDropdown).waitForDisplayed();
+    $(travelersDropdown).click();
+  }
+
+  byDefaultNumberForAdults(expectedValue) {
+    let value = $(searchFlightAdults).getAttribute('value');
+
+    assert.equal(value, expectedValue, 'Default number for adults is not 1');
+  }
+
+  validateSearchButtonIsDisplayed() {
+    let searchButton = $(searchHomepageButton).isDisplayed();
+
+    console.log(searchButton);
+
+    assert.isTrue(searchButton, 'The search button is not displayed');
+  }
+
+  validateSearchButtonIsDisabled() {
+    let button = $(searchHomepageButton).isClickable();
+    console.log(button);
+
+    assert.isFalse(button, 'The search button is clickable');
   }
 }
 export default new TestPageObject();
