@@ -57,3 +57,42 @@ Then(/^I validate that the Search button is displayed$/, function() {
 Then(/^I validate that the Search button is disabled$/, function() {
   TestPageObject.validateSearchButtonIsDisabled();
 });
+
+When(/^I click on Increment Adults button "([^"]*)" times$/, function(number) {
+  TestPageObject.clickIncrementAdultsButton(number);
+});
+
+When(/^I delete email address from the Email input field$/, function() {
+  TestPageObject.deleteEmailAddress();
+});
+
+Given(/^I access the following URL "([^"]*)"$/, function(url) {
+  TestPageObject.openCustomURL(url);
+});
+
+Then(/^I wait for the Select Flights title to be displayed$/, function() {
+  TestPageObject.waitForDisplayed();
+});
+
+Then(/^I print flights prices from Departing list$/, function() {
+  TestPageObject.departingFlightPrice();
+});
+
+Then(/^I print the Flight number from Departing list$/, function() {
+  TestPageObject.departingFlightNumber();
+});
+
+Then(/^I print the Flight depart time from Departing list$/, function() {
+  TestPageObject.departTime();
+});
+
+Then(/^I print the Flight arrive time from Departing list$/, function() {
+  TestPageObject.arriveTime();
+});
+
+Then(
+  /^I print the Seats available text for both Departing and Returning list$/,
+  function() {
+    TestPageObject.seatsAvailableText();
+  }
+);
