@@ -1,5 +1,3 @@
-const assert = require('chai').assert;
-
 const closeLoyaltyOverlayButtton =
   "[data-hook='overlay-merchandise_ice-pop_close']";
 const acceptAllCookies = "[id='onetrust-accept-btn-handler']";
@@ -24,6 +22,13 @@ const departTime =
 const arriveTime =
   " [data-hook='flights-list-view_departing'] [data-hook='flight-arrival-time']";
 const seatAvailable = "[data-hook='seats-available-text']";
+const bundlePageTitle = "[data-hook='bundles-page']";
+const bundlePageContinueButton = "[data-hook='bundles-page_continue']";
+const travelersPageTitle = "[data-hook='travelers-page_page-heading']";
+const travelersFirstName = "input[data-hook*='first-name']";
+const bonusBundleStrikethroughPrice =
+  "[data-hook='strikethrough-price_allegiant_bonus_bundle']";
+const bonusBundlePrice = "[data-hook='bundle-price_allegiant_bonus_bundle']";
 
 class TestPageObject {
   openDEVURL() {
@@ -123,7 +128,7 @@ class TestPageObject {
     console.log('Lungime array prices: ', departingFlightsPricesList.length);
 
     for (let i = 0; i < departingFlightsPricesList.length; i++) {
-      console.log(departingFlightsPricesList[i].getText());
+      console.log(departingFlightsPricesList[i].getText().slice(1));
     }
 
     for (let element of departingFlightsPricesList) {
@@ -184,6 +189,61 @@ class TestPageObject {
     for (let element of seatsText) {
       console.log('For of seats text: ', element.getText());
     }
+  }
+
+  clickAcceptAllCookiesButtonFlightsPage() {
+    $(acceptAllCookies).waitForDisplayed();
+    $(acceptAllCookies).click();
+  }
+
+  clickContinueButtonFlightsPage() {
+    $(flightsPageContinueButton).waitForDisplayed();
+    $(flightsPageContinueButton).click();
+  }
+
+  waitForBundlePageToBeDisplayed() {
+    $(bundlePageTitle).waitForDisplayed();
+    $(bundlePageContinueButton).waitForDisplayed();
+  }
+
+  calculateBonusBundleDiscount() {
+    let bonusBundleUndiscountedPrice = $(bonusBundleStrikethroughPrice)
+      .getText()
+      .slice(2, -1);
+    let bonusBundleDiscountedPrice = $(bonusBundlePrice)
+      .getText()
+      .slice(2, -1);
+
+    console.log('Undiscounted price: ', bonusBundleUndiscountedPrice);
+    console.log('Discounted price', bonusBundleDiscountedPrice);
+
+    let discountValue =
+      bonusBundleUndiscountedPrice - bonusBundleDiscountedPrice;
+
+    console.log(discountValue);
+  }
+
+  clickContinueButtonBundlesPage() {
+    $(bundlePageContinueButton).waitForDisplayed();
+    $(bundlePageContinueButton).click();
+  }
+
+  waitForTravelersPageToBeDisplayed() {
+    $(travelersPageTitle).waitForDisplayed();
+    $(travelersPageTitle).waitForDisplayed();
+  }
+
+  addTravelersFirstName() {
+    let firstName = $$(travelersFirstName);
+
+    // for (let i = 0; i < firstName.length; i++) {
+    //   firstName[i].addValue('John Doe');
+    // }
+
+    for (let input of firstName) {
+      input.addValue('John Doe');
+    }
+    browser.pause(3000);
   }
 }
 export default new TestPageObject();

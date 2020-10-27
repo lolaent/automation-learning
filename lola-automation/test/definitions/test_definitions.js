@@ -74,25 +74,53 @@ Then(/^I wait for the Select Flights title to be displayed$/, function() {
   TestPageObject.waitForDisplayed();
 });
 
-Then(/^I print flights prices from Departing list$/, function() {
+When(/^I print flights prices from Departing list$/, function() {
   TestPageObject.departingFlightPrice();
 });
 
-Then(/^I print the Flight number from Departing list$/, function() {
+When(/^I print the Flight number from Departing list$/, function() {
   TestPageObject.departingFlightNumber();
 });
 
-Then(/^I print the Flight depart time from Departing list$/, function() {
+When(/^I print the Flight depart time from Departing list$/, function() {
   TestPageObject.departTime();
 });
 
-Then(/^I print the Flight arrive time from Departing list$/, function() {
+When(/^I print the Flight arrive time from Departing list$/, function() {
   TestPageObject.arriveTime();
 });
 
-Then(
+When(
   /^I print the Seats available text for both Departing and Returning list$/,
   function() {
     TestPageObject.seatsAvailableText();
   }
 );
+
+When(/^I click on Accept All Cookies button from Flights page$/, function() {
+  TestPageObject.clickAcceptAllCookiesButtonFlightsPage();
+});
+
+When(/^I click on Continue button from Flights page$/, function() {
+  TestPageObject.clickContinueButtonFlightsPage();
+});
+
+Then(/^I wait for the Bundle page to be displayed$/, function() {
+  TestPageObject.waitForBundlePageToBeDisplayed();
+});
+
+When(/^I calculate Bonus bundle discount$/, function() {
+  TestPageObject.calculateBonusBundleDiscount();
+});
+
+When(/^I click on Continue button from Bundles page$/, function() {
+  TestPageObject.clickContinueButtonBundlesPage();
+});
+
+Then(/^I wait for the Travelers page to be displayed$/, function() {
+  TestPageObject.waitForTravelersPageToBeDisplayed();
+});
+
+Then(/^I add First Name for both travelers$/, function() {
+  TestPageObject.addTravelersFirstName();
+});

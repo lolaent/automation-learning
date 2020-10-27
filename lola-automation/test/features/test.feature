@@ -35,12 +35,23 @@ Feature: Homepage
 
     @AccessUrl
     Scenario: Access the URL
-        Given I access the following URL "https://www-intnexusrebr.okd.allegiantair.com/booking/timeline5f96d43d13c5c/flights?tt=ROUNDTRIP&o=ABE&d=SFB&ta=1&tc=0&tis=0&til=0&ds=2020-10-28&de=2020-10-29&c=0&h=0"
+        Given I access the following URL "https://www-intnexusrebr.okd.allegiantair.com/booking/timeline5f97d57fa31ac/flights?tt=ROUNDTRIP&o=ABE&d=SFB&ta=2&tc=0&tis=0&til=0&ds=2020-10-28&de=2020-10-29&c=0&h=0"
         Then I wait for the Select Flights title to be displayed
+        When I click on Accept All Cookies button from Flights page
         And I print flights prices from Departing list
         And I print the Flight number from Departing list
         And I print the Flight depart time from Departing list
         And I print the Flight arrive time from Departing list
         And I print the Seats available text for both Departing and Returning list
+        When I click on Continue button from Flights page
+        Then I wait for the Bundle page to be displayed
+        When I calculate Bonus bundle discount
+        And I click on Continue button from Bundles page
+        Then I wait for the Travelers page to be displayed
+        And I add First Name for both travelers
+
+
+
+
 
 
