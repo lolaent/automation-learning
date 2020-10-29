@@ -109,8 +109,12 @@ Then(/^I wait for the Bundle page to be displayed$/, function() {
   TestPageObject.waitForBundlePageToBeDisplayed();
 });
 
-When(/^I calculate Bonus bundle discount$/, function() {
-  TestPageObject.calculateBonusBundleDiscount();
+When(/^I calculate "([^"]*)" bundle discount$/, function(bundleType) {
+  TestPageObject.calculateBundleDiscount(bundleType);
+});
+
+When(/^I get "([^"]*)" bundle$/, function(bundleType) {
+  TestPageObject.getBundleDiscount(bundleType);
 });
 
 When(/^I click on Continue button from Bundles page$/, function() {
@@ -123,4 +127,52 @@ Then(/^I wait for the Travelers page to be displayed$/, function() {
 
 Then(/^I add First Name for both travelers$/, function() {
   TestPageObject.addTravelersFirstName();
+});
+
+Given(/^I get the current URL$/, function() {
+  TestPageObject.getCurrentUrl();
+});
+
+When(/^I click on Accept All Cookies button from Bundles page$/, function() {
+  TestPageObject.clickAcceptAllCookiesButtonBundlesPage();
+});
+
+Then(/^I select "([^"]*)" Bundle$/, function(bundleType) {
+  TestPageObject.selectBundle(bundleType);
+});
+
+Then(/^I add "([^"]*)" in the First Name field$/, function(firstName) {
+  TestPageObject.addTravelerFirstName(firstName);
+});
+
+Then(/^I add "([^"]*)" in the Last Name field$/, function(lastName) {
+  TestPageObject.addTravelerLastName(lastName);
+});
+
+Then(/^I select adult Gender$/, function() {
+  TestPageObject.selectTravelerGender();
+});
+
+Then(/^I choose Month "([^"]*)"$/, function(month) {
+  TestPageObject.addMonthDob(month);
+});
+
+Then(/^I choose Day "([^"]*)"$/, function(day) {
+  TestPageObject.addDayDob(day);
+});
+
+Then(/^I add "([^"]*)" year DOB$/, function(year) {
+  TestPageObject.addYearDob(year);
+});
+
+When(/^I click on Accept All Cookies button from Travelers page$/, function() {
+  TestPageObject.clickAcceptAllCookiesButtonTravelersPage();
+});
+
+When(/^I click on Continue button from Travelers page$/, function() {
+  TestPageObject.clickContinueButtonTravelersPage();
+});
+
+Then(/^I wait for the Seats page to be displayed$/, function() {
+  TestPageObject.waitForSeatsPageToBeDisplayed();
 });

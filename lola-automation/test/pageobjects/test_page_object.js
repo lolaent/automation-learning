@@ -1,3 +1,5 @@
+let assert = require('chai').assert;
+
 const closeLoyaltyOverlayButtton =
   "[data-hook='overlay-merchandise_ice-pop_close']";
 const acceptAllCookies = "[id='onetrust-accept-btn-handler']";
@@ -29,6 +31,22 @@ const travelersFirstName = "input[data-hook*='first-name']";
 const bonusBundleStrikethroughPrice =
   "[data-hook='strikethrough-price_allegiant_bonus_bundle']";
 const bonusBundlePrice = "[data-hook='bundle-price_allegiant_bonus_bundle']";
+const allegiantBonusBundle =
+  "[data-hook='bundle-header-image_allegiant_bonus_bundle']";
+const selectBonusBundle = "[data-hook='select-tier-2']";
+const selectTotalBundle = "[data-hook='select-tier-3']";
+const totalBundleStrikethroughPrice =
+  "[data-hook='strikethrough-price_allegiant_total_bundle']";
+const totalBundlePrice = "[data-hook='bundle-price_allegiant_total_bundle']";
+const adultFirstName = "[data-hook='travelers-form_adults_0_first-name']";
+const adultLastName = "[data-hook='travelers-form_adults_0_last-name']";
+const adultGender = "[data-hook='travelers-form_adults_0_gender_MALE']";
+const adultMonthDob = "[data-hook='travelers-form_adults_0_dob-month']";
+const adultDayDob = "[data-hook='travelers-form_adults_0_dob-day']";
+const adultYearDob = "[data-hook='travelers-form_adults_0_dob-year']";
+const travelersPageContinueButton = "[data-hook='travelers-page_continue']";
+const seatsPageTitle = "[data-hook='seats-page_page-heading']";
+const seatsPageContinueButton = "[data-hook='seats-page_continue']";
 
 class TestPageObject {
   openDEVURL() {
@@ -206,7 +224,24 @@ class TestPageObject {
     $(bundlePageContinueButton).waitForDisplayed();
   }
 
-  calculateBonusBundleDiscount() {
+  // calculateBonusBundleDiscount() {
+  //   let bonusBundleUndiscountedPrice = $(bonusBundleStrikethroughPrice)
+  //     .getText()
+  //     .slice(2, -1);
+  //   let bonusBundleDiscountedPrice = $(bonusBundlePrice)
+  //     .getText()
+  //     .slice(2, -1);
+
+  //   console.log('Undiscounted price: ', bonusBundleUndiscountedPrice);
+  //   console.log('Discounted price', bonusBundleDiscountedPrice);
+
+  //   let discountValue =
+  //     bonusBundleUndiscountedPrice - bonusBundleDiscountedPrice;
+
+  //   console.log(discountValue);
+  // }
+
+  getBundleDiscount(bundleType) {
     let bonusBundleUndiscountedPrice = $(bonusBundleStrikethroughPrice)
       .getText()
       .slice(2, -1);
@@ -214,13 +249,23 @@ class TestPageObject {
       .getText()
       .slice(2, -1);
 
-    console.log('Undiscounted price: ', bonusBundleUndiscountedPrice);
-    console.log('Discounted price', bonusBundleDiscountedPrice);
+    let totalBundleUndiscountedPrice = $(totalBundleStrikethroughPrice)
+      .getText()
+      .slice(2, -1);
+    let totalBundleDiscountedPrice = $(totalBundlePrice)
+      .getText()
+      .slice(2, -1);
 
-    let discountValue =
-      bonusBundleUndiscountedPrice - bonusBundleDiscountedPrice;
+    if (bundleType === 'Allegiant Bonus') {
+      return bonusBundleUndiscountedPrice - bonusBundleDiscountedPrice;
+    } else if (bundleType === 'Allegiant Total') {
+      return totalBundleUndiscountedPrice - totalBundleDiscountedPrice;
+    }
+  }
 
-    console.log(discountValue);
+  calculateBundleDiscount(bundleType) {
+    let bundleDiscount = this.getBundleDiscount(bundleType);
+    console.log('****** ', bundleDiscount);
   }
 
   clickContinueButtonBundlesPage() {
@@ -235,15 +280,78 @@ class TestPageObject {
 
   addTravelersFirstName() {
     let firstName = $$(travelersFirstName);
+  }
 
-    // for (let i = 0; i < firstName.length; i++) {
-    //   firstName[i].addValue('John Doe');
-    // }
+  getCurrentUrl() {
+    let url = browser
+      .getUrl()
+      .split('-')[1]
+      .split('.')[0];
 
-    for (let input of firstName) {
-      input.addValue('John Doe');
+    console.log(url);
+  }
+
+  clickAcceptAllCookiesButtonBundlesPage() {
+    $(acceptAllCookies).waitForDisplayed();
+    $(acceptAllCookies).click();
+  }
+
+  selectBundle(bundleType) {
+    if (bundleType === 'Allegiant Bonus') {
+      $(selectBonusBundle).click();
+    } else if (bundleType === 'Allegiant Total') {
+      $(selectTotalBundle).click();
+    } else {
+      assert.fail(
+        'Please use Allegiant Bonus or Allegiant Total as parameters'
+      );
     }
-    browser.pause(3000);
+  }
+
+  addTravelerFirstName(firstName) {
+    $(adultFirstName).addValue(firstName);
+  }
+
+  addTravelerLastName(lastName) {
+    $(adultLastName).addValue(lastName);
+  }
+
+  selectTravelerGender() {
+    $(adultGender).click();
+  }
+
+  addMonthDob(month) {
+    $(adultMonthDob).click();
+    browser.keys([month, 'Enter']);
+  }
+
+  addDayDob(day) {
+    $(adultDayDob).click();
+    browser.keys([day, 'Enter']);
+  }
+
+  addYearDob(year) {
+    $(adultYearDob).addValue(year);
+  }
+
+  clickAcceptAllCookiesButtonTravelersPage() {
+    $(acceptAllCookies).waitForDisplayed();
+    $(acceptAllCookies).click();
+  }
+
+  clickContinueButtonTravelersPage() {
+    $(travelersPageContinueButton).waitForDisplayed();
+    // $(travelersPageContinueButton).scrollIntoView();
+
+    let scrollIntoViewOptions = { behavior: 'smooth' };
+    $(travelersPageContinueButton).scrollIntoView(scrollIntoViewOptions);
+
+    $(travelersPageContinueButton).click();
+  }
+
+  waitForSeatsPageToBeDisplayed() {
+    $(seatsPageTitle).waitForDisplayed();
+    $(seatsPageContinueButton).waitForDisplayed();
   }
 }
 export default new TestPageObject();
