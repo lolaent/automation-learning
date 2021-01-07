@@ -47,7 +47,26 @@ const adultYearDob = "[data-hook='travelers-form_adults_0_dob-year']";
 const travelersPageContinueButton = "[data-hook='travelers-page_continue']";
 const seatsPageTitle = "[data-hook='seats-page_page-heading']";
 const seatsPageContinueButton = "[data-hook='seats-page_continue']";
-
+const seatsDepartingTab = "[data-hook='seats-page-tabs_departing']";
+const seatsReturningTab = "[data-hook='seats-page-tabs_returning']";
+const seatsPageNoThanksLink = "[data-hook='seats-page_skip']";
+const bagsPageTitle = "[data-hook='ancillaries-page_page-heading']";
+const petInCabinAddToCart = "[data-hook='pet-in-cabin-card_add-to-cart']";
+const decrementButonCarryOn =
+  "[data-hook='ancillaries-page-traveler_0_carry-on_decrement']";
+const decrementButtonCheckedBags =
+  "[data-hook='ancillaries-page-traveler_0_checked-in_decrement']";
+const incrementCarryOnBagsButton =
+  "[data-hook='ancillaries-page-traveler_0_carry-on_increment']";
+const incrementCheckedBagsButton =
+  "[data-hook='ancillaries-page-traveler_0_checked-in_increment']";
+const addToCartTripFlex = "[data-hook='trip-flex-card_add-to-cart']";
+const tripFlexAddedToCart = "[data-hook='trip-flex-card_cart-added']";
+const addPetInCabinButton = "[data-hook='pet-in-cabin-card_add-to-cart']";
+const addPetInCabinSegment =
+  "[data-hook='extras-popup-flight-leg_departing'] [data-hook='extras-popup-flight-leg_checkbox_label']";
+const addPetInCabinModalButton = "[data-hook='pet-in-cabin-modal_add-to-cart']";
+const petInCabinPrice = "[data-hook='pet-in-cabin-card_price-selected']";
 class TestPageObject {
   openDEVURL() {
     browser.maximizeWindow();
@@ -352,6 +371,135 @@ class TestPageObject {
   waitForSeatsPageToBeDisplayed() {
     $(seatsPageTitle).waitForDisplayed();
     $(seatsPageContinueButton).waitForDisplayed();
+  }
+
+  departingTabHighlighted() {
+    let isTabHighlighted = $(seatsDepartingTab).getAttribute('aria-selected');
+
+    let isTabHighlightedBoolean = isTabHighlighted === 'true';
+    assert.isTrue(isTabHighlightedBoolean, 'Departing tab is not highlighted');
+  }
+
+  clickContinueDepartingTab() {
+    $(seatsPageContinueButton).waitForDisplayed();
+    $(seatsPageContinueButton).click();
+    browser.pause(3000);
+  }
+  returningTabHighlighted() {
+    let isTabHighlighted = $(seatsReturningTab).getAttribute('aria-selected');
+
+    let isTabHighlightedBoolean = isTabHighlighted === 'true';
+
+    assert.isTrue(isTabHighlightedBoolean, 'Returning tab is not highlighted');
+  }
+
+  clickNoThanksLink() {
+    let scrollIntoViewOptions = { behavior: 'smooth' };
+    $(seatsPageNoThanksLink).scrollIntoView(scrollIntoViewOptions);
+
+    $(seatsPageNoThanksLink).waitForDisplayed();
+    $(seatsPageNoThanksLink).click();
+  }
+
+  waitForBagsPageToBeDisplayed() {
+    $(bagsPageTitle).waitForDisplayed();
+    $(petInCabinAddToCart).waitForDisplayed();
+  }
+
+  carryOnDecrementButtonsIsDisabled() {
+    let isCarryOnDecrementButtonDisabled = $(
+      decrementButonCarryOn
+    ).getAttribute('disabled');
+
+    let isCarrryOnDecrementButtonDisabledBoolean =
+      isCarryOnDecrementButtonDisabled === 'true';
+    assert.isTrue(
+      isCarrryOnDecrementButtonDisabledBoolean,
+      'Carry On decrement button is not disabled'
+    );
+  }
+
+  checkedBagsDecrementButtonsIsDisabled() {
+    let isCheckedBagsDecrementButtonDisabled = $(
+      decrementButtonCheckedBags
+    ).getAttribute('disabled');
+
+    let isCheckedBagsDecrementButtonDisabledBoolean =
+      isCheckedBagsDecrementButtonDisabled === 'true';
+    assert.isTrue(
+      isCheckedBagsDecrementButtonDisabledBoolean,
+      'Checked Bags decrement button is not disabled'
+    );
+  }
+
+  clickIncrementCarryOnBagsButton(carryOnBags) {
+    $(incrementCarryOnBagsButton).waitForDisplayed();
+
+    for (let i = 0; i < carryOnBags; i++) {
+      $(incrementCarryOnBagsButton).click();
+    }
+  }
+
+  carryOnIncrementButtonsIsDisabled() {
+    let isCarryOnIncrementButtonDisabled = $(
+      incrementCarryOnBagsButton
+    ).getAttribute('disabled');
+
+    let isCarryOnIncrementButtonDisabledBoolean =
+      isCarryOnIncrementButtonDisabled === 'true';
+    assert.isTrue(
+      isCarryOnIncrementButtonDisabledBoolean,
+      'Carry On increment button is not disabled'
+    );
+  }
+
+  clickIncrementCheckedBagsButton(checkedBags) {
+    $(incrementCheckedBagsButton).waitForDisplayed();
+
+    for (let i = 0; i < checkedBags; i++) {
+      $(incrementCheckedBagsButton).click();
+    }
+  }
+
+  checkedBagsIncrementButtonsIsDisabled() {
+    let isCheckedBagsIncrementButtonDisabled = $(
+      incrementCheckedBagsButton
+    ).getAttribute('disabled');
+
+    let isCheckedBagsIncrementButtonDisabledBoolean =
+      isCheckedBagsIncrementButtonDisabled === 'true';
+    assert.isTrue(
+      isCheckedBagsIncrementButtonDisabledBoolean,
+      'Checked Bags increment button is not disabled'
+    );
+  }
+
+  addTripFlex() {
+    $(addToCartTripFlex).click();
+  }
+
+  validateAddedTripflexMessage(expectedText) {
+    $(tripFlexAddedToCart).waitForDisplayed();
+
+    let addedToCartText = $(tripFlexAddedToCart).getText();
+
+    assert.equal(
+      addedToCartText,
+      expectedText,
+      'ADDED TO CART text is displayed'
+    );
+    browser.pause(3000);
+  }
+
+  addPetInCabin() {
+    $(addPetInCabinButton).click();
+    $(addPetInCabinSegment).click();
+    $(addPetInCabinModalButton).click();
+  }
+
+  petInCabinPrice() {
+    let petInCabinTotalPrice = $(petInCabinPrice).getText();
+    console.log(petInCabinTotalPrice);
   }
 }
 export default new TestPageObject();

@@ -176,3 +176,82 @@ When(/^I click on Continue button from Travelers page$/, function() {
 Then(/^I wait for the Seats page to be displayed$/, function() {
   TestPageObject.waitForSeatsPageToBeDisplayed();
 });
+
+Then(
+  /^I validate that Departing tab is highlighted on the Seats page$/,
+  function() {
+    TestPageObject.departingTabHighlighted();
+  }
+);
+
+Then(/^I click on Continue button while on Departing tab$/, function() {
+  TestPageObject.clickContinueDepartingTab();
+});
+
+Then(
+  /^I validate that Returning tab is highlighted on the Seats page$/,
+  function() {
+    TestPageObject.returningTabHighlighted();
+  }
+);
+
+Then(/^I click on No, thanks link from the Seats page$/, function() {
+  TestPageObject.clickNoThanksLink();
+});
+
+Then(/^I wait for the Bags page to be displayed$/, function() {
+  TestPageObject.waitForBagsPageToBeDisplayed();
+});
+
+Then(/^I validate that One-Carry On decrement button is disabled$/, function() {
+  TestPageObject.carryOnDecrementButtonsIsDisabled();
+});
+
+Then(
+  /^I validate that Checked Bags On decrement button is disabled$/,
+  function() {
+    TestPageObject.checkedBagsDecrementButtonsIsDisabled();
+  }
+);
+
+Then(/^I click on Increment Carry-On button "([^"]*)" time$/, function(
+  carryOnBags
+) {
+  TestPageObject.clickIncrementCarryOnBagsButton(carryOnBags);
+});
+
+Then(/^I validate that One-Carry On increment button is disabled/, function() {
+  TestPageObject.carryOnIncrementButtonsIsDisabled();
+});
+
+Then(/^I click on Increment Checked Bags button "([^"]*)" times$/, function(
+  checkedBags
+) {
+  TestPageObject.clickIncrementCheckedBagsButton(checkedBags);
+});
+
+Then(
+  /^I validate that Checked Bags On increment button is disabled/,
+  function() {
+    TestPageObject.checkedBagsIncrementButtonsIsDisabled();
+  }
+);
+
+When(/^I click on Add to cart button in order to add Trip Flex$/, function() {
+  TestPageObject.addTripFlex();
+});
+
+Then(/^I validate that "([^"]*)" text is displayed$/, function(expectedText) {
+  TestPageObject.validateAddedTripflexMessage(expectedText);
+});
+
+When(
+  /^I click on Add to cart button in order to add Pet in Cabin$/,
+  function() {
+    TestPageObject.addPetInCabin();
+  }
+);
+
+When(/^I collect Pet in Cabin price$/, function() {
+  TestPageObject.petInCabinPrice();
+});

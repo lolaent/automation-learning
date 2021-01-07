@@ -35,7 +35,7 @@ Feature: Homepage
 
     @AccessUrl
     Scenario: Access the URL
-        Given I access the following URL "https://www-devnexusrebr.okd.allegiantair.com/booking/timeline5f9abeb08abc6/flights?tt=ROUNDTRIP&o=ABE&d=SFB&ta=1&tc=0&tis=0&til=0&ds=2020-11-06&de=2020-11-08&c=0&h=0"
+        Given I access the following URL "https://www-devnexusrebr.okd.allegiantair.com/booking/flights?tt=ROUNDTRIP&o=ABE&d=SFB&ta=1&tc=0&tis=0&til=0&ds=2021-04-17&de=2021-04-19&c=1&h=1"
         Then I wait for the Select Flights title to be displayed
         When I click on Accept All Cookies button from Flights page
         And I print flights prices from Departing list
@@ -46,7 +46,7 @@ Feature: Homepage
         When I click on Continue button from Flights page
         Then I wait for the Bundle page to be displayed
         Given I get the current URL
-        Then I select "Allegiant Bonus" Bundle
+        # Then I select "Allegiant Bonus" Bundle
         When I calculate "Allegiant Total" bundle discount
         And I get "Allegiant Total" bundle
         And I click on Continue button from Bundles page
@@ -61,23 +61,18 @@ Feature: Homepage
         And I add "1989" year DOB
         When I click on Continue button from Travelers page
         Then I wait for the Seats page to be displayed
-
-    @TravelersDetails
-    Scenario: Fill in traveler required data
-        Given I access the following URL "https://www-devnexusrebr.okd.allegiantair.com/booking/timeline5f9ab70f4e0d3/travelers"
-        Then I wait for the Travelers page to be displayed
-        And I add "Traveler" in the First Name field
-        And I add "One" in the Last Name field
-        And I select adult Gender
-        And I choose Month "February"
-        And I choose Day DOB
-        And I add "1989" year DOB
-        When I click on Accept All Cookies button from Travelers page
-        And I click on Continue button from Travelers page
-        Then I wait for the Seats page to be displayed
-
-
-
-
-
-
+        And I validate that Departing tab is highlighted on the Seats page
+        And I click on Continue button while on Departing tab
+        And I validate that Returning tab is highlighted on the Seats page
+        And I click on No, thanks link from the Seats page
+        Then I wait for the Bags page to be displayed
+        And I validate that One-Carry On decrement button is disabled
+        And I validate that Checked Bags On decrement button is disabled
+        Then I click on Increment Carry-On button "1" time
+        And I validate that One-Carry On increment button is disabled
+        Then I click on Increment Checked Bags button "4" times
+        And I validate that Checked Bags On increment button is disabled
+        When I click on Add to cart button in order to add Trip Flex
+        Then I validate that "ADDED TO CART" text is displayed
+        When I click on Add to cart button in order to add Pet in Cabin
+# Then I collect Pet in Cabin price
