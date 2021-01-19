@@ -252,6 +252,45 @@ When(
   }
 );
 
-When(/^I collect Pet in Cabin price$/, function() {
+When(/^I click on Continue button from Bags page$/, function() {
+  TestPageObject.clickContinueButtonBagsPage();
+});
+
+Then(/^I click on Continue button from the pop-up$/, function() {
+  TestPageObject.clickContinuePopupBagsPage();
+});
+
+Then(/^I wait for the Hotels page to be displayed$/, function() {
+  TestPageObject.waitForHotelsPageToBeDisplayed();
+});
+
+When(/^I click on Continue button from Hotels page$/, function() {
+  TestPageObject.clickContinueButtonHotelsPage();
+});
+
+Then(/^I wait for the Cars page to be displayed$/, function() {
+  TestPageObject.waitForCarsPageToBeDisplayed();
+});
+
+Then(/^I open the cart$/, function() {
+  TestPageObject.openCart();
+});
+
+Then(/^I collect Pet in Cabin price$/, function() {
   TestPageObject.petInCabinPrice();
+});
+
+Then(
+  /^I validate that the PETC price is also displayed in the Cart$/,
+  function() {
+    TestPageObject.petInCabinCartPrice();
+  }
+);
+
+When(/^I close the cart$/, function() {
+  TestPageObject.closeCart();
+});
+
+Then(/^I remove the PETC$/, function() {
+  TestPageObject.removePetc();
 });

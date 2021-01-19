@@ -67,6 +67,18 @@ const addPetInCabinSegment =
   "[data-hook='extras-popup-flight-leg_departing'] [data-hook='extras-popup-flight-leg_checkbox_label']";
 const addPetInCabinModalButton = "[data-hook='pet-in-cabin-modal_add-to-cart']";
 const petInCabinPrice = "[data-hook='pet-in-cabin-card_price-selected']";
+const bagsPageContinueButton = "[data-hook='ancillaries-page_continue-popup']";
+const bagsPageContinuePopup =
+  "[data-hook='ancillaries-continue-popup_button_continue']";
+const hotelsPageTitle = "[data-hook='hotels-page_page-heading']";
+const hotelsPageContinueButton = "[data-hook='hotels-page_continue']";
+const carsPageTitle = "[data-hook='cars-page_page-heading']";
+const carsPageContinueButton = "[data-hook='cars-page_continue']";
+const cartIcon = "[data-hook='header-cart-button_icon']";
+const petInCabinCartPrice =
+  "[data-hook='cart-travelers_0_extras_pet-in-cabin-price_undefined']";
+const cartXbutton = "[data-hook='cart-close']";
+const removePetInCabine = "[data-hook='pet-in-cabin-card_remove']";
 class TestPageObject {
   openDEVURL() {
     browser.maximizeWindow();
@@ -492,6 +504,9 @@ class TestPageObject {
   }
 
   addPetInCabin() {
+    let scrollIntoViewOptions = { behavior: 'smooth' };
+    $(addPetInCabinButton).scrollIntoView(scrollIntoViewOptions);
+
     $(addPetInCabinButton).click();
     $(addPetInCabinSegment).click();
     $(addPetInCabinModalButton).click();
@@ -500,6 +515,51 @@ class TestPageObject {
   petInCabinPrice() {
     let petInCabinTotalPrice = $(petInCabinPrice).getText();
     console.log(petInCabinTotalPrice);
+  }
+
+  openCart() {
+    $(cartIcon).click();
+  }
+
+  petInCabinCartPrice() {
+    $(petInCabinCartPrice).isDisplayed();
+  }
+
+  clickContinueButtonBagsPage() {
+    $(bagsPageContinueButton).waitForDisplayed();
+
+    let scrollIntoViewOptions = { behavior: 'smooth' };
+    $(bagsPageContinueButton).scrollIntoView(scrollIntoViewOptions);
+
+    $(bagsPageContinueButton).click();
+  }
+
+  clickContinuePopupBagsPage() {
+    $(bagsPageContinuePopup).waitForDisplayed();
+    $(bagsPageContinuePopup).click();
+  }
+
+  waitForHotelsPageToBeDisplayed() {
+    $(hotelsPageTitle).waitForDisplayed();
+    $(hotelsPageContinueButton).waitForDisplayed();
+  }
+
+  clickContinueButtonHotelsPage() {
+    $(hotelsPageContinueButton).waitForDisplayed();
+    $(hotelsPageContinueButton).click();
+  }
+
+  waitForCarsPageToBeDisplayed() {
+    $(carsPageTitle).waitForDisplayed();
+    $(carsPageContinueButton).waitForDisplayed();
+  }
+
+  closeCart() {
+    $(cartXbutton).click();
+  }
+
+  removePetc() {
+    $(removePetInCabine).click();
   }
 }
 export default new TestPageObject();

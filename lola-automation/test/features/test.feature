@@ -35,7 +35,7 @@ Feature: Homepage
 
     @AccessUrl
     Scenario: Access the URL
-        Given I access the following URL "https://www-devnexusrebr.okd.allegiantair.com/booking/flights?tt=ROUNDTRIP&o=ABE&d=SFB&ta=1&tc=0&tis=0&til=0&ds=2021-04-17&de=2021-04-19&c=1&h=1"
+        Given I access the following URL "https://www-rebr-int.qa1.allegiantair.com/booking/timeline6000303fa5823/ancillaries"
         Then I wait for the Select Flights title to be displayed
         When I click on Accept All Cookies button from Flights page
         And I print flights prices from Departing list
@@ -74,5 +74,56 @@ Feature: Homepage
         And I validate that Checked Bags On increment button is disabled
         When I click on Add to cart button in order to add Trip Flex
         Then I validate that "ADDED TO CART" text is displayed
+
+    @AddPetc
+    Scenario: Add petc and veify the price is displayed in the cart
+        Given I access the following URL "https://www-devnexusrebr.okd.allegiantair.com/booking/timeline6006fd5f3a0f9/flights?tt=ONEWAY&o=ABE&d=SFB&ta=1&tc=0&tis=0&til=0&ds=2021-05-25&de=&c=1&h=1"
+        Then I wait for the Select Flights title to be displayed
+        When I click on Accept All Cookies button from Flights page
+        And I click on Continue button from Flights page
+        Then I wait for the Bundle page to be displayed
+        When I click on Continue button from Bundles page
+        Then I wait for the Travelers page to be displayed
+        And I add "Traveler" in the First Name field
+        And I add "One" in the Last Name field
+        And I select adult Gender
+        And I choose Month "February"
+        And I choose Day "3"
+        And I add "1989" year DOB
+        When I click on Continue button from Travelers page
+        Then I wait for the Seats page to be displayed
+        And I click on No, thanks link from the Seats page
+        Then I wait for the Bags page to be displayed
         When I click on Add to cart button in order to add Pet in Cabin
-# Then I collect Pet in Cabin price
+        Then I collect Pet in Cabin price
+        Then I open the cart
+        Then I validate that the PETC price is also displayed in the Cart
+        When I close the cart
+        Then I remove the PETC
+        And I open the cart
+    # And I validate that the PETC price is no longer displayed in the cart
+
+    @AddCar
+    Scenario: Add car in the cart
+        Given I access the following URL "https://www-intnexusrebr.okd.allegiantair.com/booking/timeline5ffeefded6cf8/flights?tt=ONEWAY&o=ABE&d=SFB&ta=1&tc=0&tis=0&til=0&ds=2021-04-20&de=&c=1&h=1"
+        Then I wait for the Select Flights title to be displayed
+        When I click on Accept All Cookies button from Flights page
+        And I click on Continue button from Flights page
+        Then I wait for the Bundle page to be displayed
+        When I click on Continue button from Bundles page
+        Then I wait for the Travelers page to be displayed
+        # And I add "Traveler" in the First Name field
+        # And I add "One" in the Last Name field
+        # And I select adult Gender
+        # And I choose Month "February"
+        # And I choose Day "3"
+        # And I add "1989" year DOB
+        When I click on Continue button from Travelers page
+        Then I wait for the Seats page to be displayed
+        And I click on No, thanks link from the Seats page
+        Then I wait for the Bags page to be displayed
+        When I click on Continue button from Bags page
+        Then I click on Continue button from the pop-up
+        Then I wait for the Hotels page to be displayed
+        When I click on Continue button from Hotels page
+        Then I wait for the Cars page to be displayed
